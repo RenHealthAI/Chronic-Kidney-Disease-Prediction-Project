@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/e9ba4100-536e-4c03-beb3-3b8d8b93527e/resourceGroups/renhealthckddatacollection_group/providers/Microsoft.Web/sites/renhealthckddatacollection",
+    "appService.deploySubpath": "."
+}
