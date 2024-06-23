@@ -16,7 +16,7 @@ def sanitize_input(input_text):
 # Function to upload image to Azure Blob Storage
 def upload_image_to_blob(file, participant_id):
     # Azure Storage account connection string
-    connect_str = "DefaultEndpointsProtocol=https;AccountName=renhealthblobstorage;AccountKey=j0F0Fod6BvjY7rMP4nSnW0G1mMkEVDT1ObRtaK5sVbYO7y6EWqDpnRXXHUEZ95uJ6/wAc4KvnMaJ+ASt8uXgOA==;EndpointSuffix=core.windows.net"
+    connect_str = os.environ.get('conn_str')
     
     # Create the BlobServiceClient object
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
@@ -33,20 +33,20 @@ def upload_image_to_blob(file, participant_id):
     # Return the URL of the uploaded image
     return blob_client.url
 
-def save_image(image_file, participant_id):
-    """Save uploaded image to a directory and return the file path."""
-    if image_file:
-        img_directory = 'uploaded_images'
-        if not os.path.exists(img_directory):
-            os.makedirs(img_directory)
-        # Use participant ID and timestamp to create a unique filename
-        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-        img_filename = f"{participant_id}_{timestamp}_{image_file.name}"
-        img_path = os.path.join(img_directory, img_filename)
-        with open(img_path, "wb") as f:
-            f.write(image_file.getbuffer())
-        return img_path
-    return None
+# def save_image(image_file, participant_id):
+#     """Save uploaded image to a directory and return the file path."""
+#     if image_file:
+#         img_directory = 'uploaded_images'
+#         if not os.path.exists(img_directory):
+#             os.makedirs(img_directory)
+#         # Use participant ID and timestamp to create a unique filename
+#         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+#         img_filename = f"{participant_id}_{timestamp}_{image_file.name}"
+#         img_path = os.path.join(img_directory, img_filename)
+#         with open(img_path, "wb") as f:
+#             f.write(image_file.getbuffer())
+#         return img_path
+#     return None
 
 # Function to get the next Participant ID
 def get_next_participant_id(conn):
