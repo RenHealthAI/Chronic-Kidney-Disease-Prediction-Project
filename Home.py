@@ -15,6 +15,7 @@ def sanitize_input(input_text):
 def upload_image_to_blob(file, participant_id):
     # Azure Storage account connection string
     connect_str = os.environ.get('conn_str')
+    # connect_str = st.secrets['conn_str']
     
     # Create the BlobServiceClient object
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
@@ -77,8 +78,8 @@ st.set_page_config(page_title= 'CKD Data Collection Portal',layout='wide', initi
 #         +st.secrets['password']
 #         ) 
 
-#define the connections for the DBs when deployed to cloud
-#assign credentials for the avondw DB credentials
+# define the connections for the DBs when deployed to cloud
+# assign credentials for the avondw DB credentials
 server = os.environ.get('server_name')
 database = os.environ.get('db_name')
 username = os.environ.get('db_username')
@@ -209,6 +210,7 @@ imaging_results = sanitize_input(st.text_area('Findings of Imaging'))
 
 #writing the data to a csv file
 if st.button('Submit Data'):
+    image_url = None
     if imaging_scan is not None:
         image_url = upload_image_to_blob(imaging_scan, participant_id)
     # Create a dictionary of the data
@@ -255,7 +257,7 @@ if st.button('Submit Data'):
         'FamilyHistoryOfGeneticDisorders': fam_hist_genetic or None,
         'FamilyHistoryOfGeneticDisordersDetails': fam_hist_genetic_details or None,
         'TypeOfImaging': imaging_type or None,
-        'ImagingScan': image_url or None,  # Placeholder for image path
+        'ImagingScan': image_url,  # Placeholder for image path
         'ImagingResult': imaging_results or None
     }
 
