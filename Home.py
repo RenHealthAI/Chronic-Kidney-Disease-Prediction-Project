@@ -2,10 +2,8 @@ import streamlit as st
 from dateutil.relativedelta import relativedelta
 import datetime as dt
 import pyodbc
-from PIL import Image
 import os
 import pandas as pd
-from datetime import datetime
 from azure.storage.blob import BlobServiceClient
 
 
