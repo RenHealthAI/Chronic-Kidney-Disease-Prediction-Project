@@ -385,6 +385,10 @@ if st.session_state['authentication_status']:
                 conn.close()
         submit_data(participant_data, eucr_tests, fbc_tests)
 
+        #once the data has been successfully written to the database, the form is cleared
+        st.experimental_rerun()       
+
+
      # Add the logout button in the sidebar
     with st.sidebar:
         if authenticator.logout('Logout', 'main'):
