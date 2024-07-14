@@ -89,34 +89,34 @@ authenticator = stauth.Authenticate(
     config.get('preauthorized', [])
 )
 
-#define the connection for the DBs when working on the local environment
-conn = pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
-        +st.secrets['server']
-        +';DATABASE='
-        +st.secrets['database']
-        +';UID='
-        +st.secrets['username']
-        +';PWD='
-        +st.secrets['password']
-        ) 
+# #define the connection for the DBs when working on the local environment
+# conn = pyodbc.connect(
+#         'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
+#         +st.secrets['server']
+#         +';DATABASE='
+#         +st.secrets['database']
+#         +';UID='
+#         +st.secrets['username']
+#         +';PWD='
+#         +st.secrets['password']
+#         ) 
 
 # define the connections for the DBs when deployed to cloud
 # assign credentials for the avondw DB credentials
-# server = os.environ.get('server_name')
-# database = os.environ.get('db_name')
-# username = os.environ.get('db_username')
-# password = os.environ.get('password')
-# conn = pyodbc.connect(
-#         'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
-#         + server
-#         +';DATABASE='
-#         + database
-#         +';UID='
-#         + username
-#         +';PWD='
-#         + password
-#         )
+server = os.environ.get('server_name')
+database = os.environ.get('db_name')
+username = os.environ.get('db_username')
+password = os.environ.get('password')
+conn = pyodbc.connect(
+        'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
+        + server
+        +';DATABASE='
+        + database
+        +';UID='
+        + username
+        +';PWD='
+        + password
+        )
 
 def get_data_from_sql():
     participant = pd.read_sql(query, conn)

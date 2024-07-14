@@ -1,16 +1,16 @@
 credentials:
   usernames:
-    enumerate1:
+    enumerator_user1:
       name: Enumerator 1
       password: ckdproject@1
-    enumerate2:
+    enumerator_user2:
       name: Enumerator 2
       password: ckdproject@1
-    enumerate 3:
+    enumerator_user3:
       name: Enumerator 3
       password: ckdproject@1
     reviewer1:
-      name: Reviewer 1
+      name: Sekoni Julian
       password: ckdproject@1
 cookie:
   name: renhealthckd
