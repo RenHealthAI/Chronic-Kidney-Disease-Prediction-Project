@@ -1,17 +1,17 @@
 credentials:
   usernames:
-    enumerator_user1:
-      name: Enumerator 1
+    titilayo.grace:
+      name: Titilayo Grace
       password: ckdproject@1
-    enumerator_user2:
-      name: Enumerator 2
+    nwaigwe.amarachi:
+      name: Nwaigwe Amarachi
       password: ckdproject@1
-    enumerator_user3:
-      name: Enumerator 3
+    ogundijo.bisola:
+      name: Ogundijo Bisola
       password: ckdproject@1
     reviewer1:
-      name: Sekoni Julian
-      password: ckdproject@1
+      name: Admin
+      password: ckdproject@123
 cookie:
   name: renhealthckd
   key: some_random_key

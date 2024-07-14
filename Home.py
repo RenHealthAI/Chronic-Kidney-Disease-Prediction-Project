@@ -248,7 +248,8 @@ if st.session_state['authentication_status']:
     imaging_results = st.text_area('Findings of Imaging')
 
     # Initialize the BlobServiceClient
-    blob_service_client = BlobServiceClient.from_connection_string(st.secrets['conn_str'])
+    # blob_service_client = BlobServiceClient.from_connection_string(st.secrets['conn_str'])
+    blob_service_client = BlobServiceClient.from_connection_string(os.environ.get('conn_str'))
     # Create a single container for all uploaded images
     container_name = 'scanimages'
     container_client = blob_service_client.get_container_client(container_name)
