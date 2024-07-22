@@ -41,34 +41,34 @@ def login_user(username,password):
     else:
         return None, None, None, None
 
-#define the connection for the DBs when working on the local environment
-conn = pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
-        +st.secrets['server']
-        +';DATABASE='
-        +st.secrets['database']
-        +';UID='
-        +st.secrets['username']
-        +';PWD='
-        +st.secrets['password']
-        ) 
-
-# # define the connections for the DBs when deployed to cloud
-# # assign credentials for the avondw DB credentials
-# server = os.environ.get('server_name')
-# database = os.environ.get('db_name')
-# username = os.environ.get('db_username')
-# password = os.environ.get('password')
+# #define the connection for the DBs when working on the local environment
 # conn = pyodbc.connect(
 #         'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
-#         + server
+#         +st.secrets['server']
 #         +';DATABASE='
-#         + database
+#         +st.secrets['database']
 #         +';UID='
-#         + username
+#         +st.secrets['username']
 #         +';PWD='
-#         + password
-#         )
+#         +st.secrets['password']
+#         ) 
+
+# define the connections for the DBs when deployed to cloud
+# assign credentials for the avondw DB credentials
+server = os.environ.get('server_name')
+database = os.environ.get('db_name')
+username = os.environ.get('db_username')
+password = os.environ.get('password')
+conn = pyodbc.connect(
+        'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
+        + server
+        +';DATABASE='
+        + database
+        +';UID='
+        + username
+        +';PWD='
+        + password
+        )
 
 def get_data_from_sql():
     participant = pd.read_sql(query, conn)
@@ -284,8 +284,8 @@ if st.session_state['logged_in']:
             submit = st.form_submit_button('Submit Record')
 
         # Initialize the BlobServiceClient
-        blob_service_client = BlobServiceClient.from_connection_string(st.secrets['conn_str'])
-        # blob_service_client = BlobServiceClient.from_connection_string(os.environ.get('conn_str'))
+        # blob_service_client = BlobServiceClient.from_connection_string(st.secrets['conn_str'])
+        blob_service_client = BlobServiceClient.from_connection_string(os.environ.get('conn_str'))
         # Create a single container for all uploaded images
         container_name = 'scanimages'
         container_client = blob_service_client.get_container_client(container_name)
