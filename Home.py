@@ -41,34 +41,34 @@ def login_user(username,password):
     else:
         return None, None, None, None
 
-# #define the connection for the DBs when working on the local environment
-# conn = pyodbc.connect(
-#         'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
-#         +st.secrets['server']
-#         +';DATABASE='
-#         +st.secrets['database']
-#         +';UID='
-#         +st.secrets['username']
-#         +';PWD='
-#         +st.secrets['password']
-#         ) 
-
-# define the connections for the DBs when deployed to cloud
-# assign credentials for the avondw DB credentials
-server = os.environ.get('server_name')
-database = os.environ.get('db_name')
-username = os.environ.get('db_username')
-password = os.environ.get('password')
+#define the connection for the DBs when working on the local environment
 conn = pyodbc.connect(
         'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
-        + server
+        +st.secrets['server']
         +';DATABASE='
-        + database
+        +st.secrets['database']
         +';UID='
-        + username
+        +st.secrets['username']
         +';PWD='
-        + password
-        )
+        +st.secrets['password']
+        ) 
+
+# # define the connections for the DBs when deployed to cloud
+# # assign credentials for the avondw DB credentials
+# server = os.environ.get('server_name')
+# database = os.environ.get('db_name')
+# username = os.environ.get('db_username')
+# password = os.environ.get('password')
+# conn = pyodbc.connect(
+#         'DRIVER={ODBC Driver 17 for SQL Server};SERVER='
+#         + server
+#         +';DATABASE='
+#         + database
+#         +';UID='
+#         + username
+#         +';PWD='
+#         + password
+#         )
 
 def get_data_from_sql():
     participant = pd.read_sql(query, conn)
@@ -218,19 +218,19 @@ if st.session_state['logged_in']:
             hdl_cholesterol = st.number_input('HDL Cholesterol (mg/dL)', value=None)
             triglycerides = st.number_input('Triglycerides (mg/dL)', value=None)
 
-            num_eucr_tests = st.sidebar.number_input('Number of E/U/Cr Tests to Add', value=1)
+            num_eucr_tests = st.sidebar.number_input('Number of E/U/Cr Tests to Add', value=0)
             eucr_tests = []
             for i in range(num_eucr_tests):
                 st.subheader(f'E/U/Cr Test {i + 1}')
-                test_date = st.date_input(f'Date of Test {i + 1}', value=None, key=f'eucr_test_date_{i}')
+                test_date = st.date_input(f'Date of Test {i + 1}', value=None, min_value=dt.datetime.now().date()-relativedelta(years=30), max_value=dt.datetime.now().date(), key=f'eucr_test_date_{i}')
                 systolic_bp = st.number_input(f'Systolic Blood Pressure {i + 1} (mmHg)', value=None, key=f'eucr_systolic_bp_{i}')
                 diastolic_bp = st.number_input(f'Diastolic Blood Pressure {i + 1} (mmHg)', value=None, key=f'eucr_diastolic_bp_{i}')
-                potassium = st.number_input(f'Potassium {i + 1} (mmol/L)', value=None, key=f'eucr_potassium_{i}')
-                sodium = st.number_input(f'Sodium {i + 1} (mmol/L)', value=None, key=f'eucr_sodium_{i}')
-                chloride = st.number_input(f'Chloride {i + 1} (mmol/L)', value=None, key=f'eucr_chloride_{i}')
-                bicarbonate = st.number_input(f'Bicarbonate {i + 1} (mmol/L)', value=None, key=f'eucr_bicarbonate_{i}')
-                urea = st.number_input(f'Urea {i + 1} (mmol/L)', value=None, key=f'eucr_urea_{i}')
-                creatinine = st.number_input(f'Creatinine {i + 1} (µmol/L)', value=None, key=f'eucr_creatinine_{i}')
+                potassium = st.number_input(f'Potassium {i + 1} (mg/dL)', value=None, key=f'eucr_potassium_{i}')
+                sodium = st.number_input(f'Sodium {i + 1} (mg/dL)', value=None, key=f'eucr_sodium_{i}')
+                chloride = st.number_input(f'Chloride {i + 1} (mg/dL)', value=None, key=f'eucr_chloride_{i}')
+                bicarbonate = st.number_input(f'Bicarbonate {i + 1} (mg/dL)', value=None, key=f'eucr_bicarbonate_{i}')
+                urea = st.number_input(f'Urea {i + 1} (mg/dL)', value=None, key=f'eucr_urea_{i}')
+                creatinine = st.number_input(f'Creatinine {i + 1} (mg/dL)', value=None, key=f'eucr_creatinine_{i}')
                 egfr = st.number_input(f'eGFR {i + 1} (mL/min/1.73m²)', value=None, key=f'eucr_egfr_{i}')
                 eucr_tests.append({
                     'DateOfTest': test_date,
@@ -245,11 +245,11 @@ if st.session_state['logged_in']:
                     'eGFR': egfr
                 })
 
-            num_fbc_tests = st.sidebar.number_input('Number of FBC Tests to Add', value=1)
+            num_fbc_tests = st.sidebar.number_input('Number of FBC Tests to Add', value=0)
             fbc_tests = []
             for i in range(num_fbc_tests):
                 st.subheader(f'FBC Test {i + 1}')
-                test_date = st.date_input(f'Date of Test {i + 1}', value=None, key=f'fbc_test_date_{i}')
+                test_date = st.date_input(f'Date of Test {i + 1}', value=None, min_value=dt.datetime.now().date()-relativedelta(years=30), max_value=dt.datetime.now().date(), key=f'fbc_test_date_{i}')
                 hemoglobin = st.number_input(f'Hemoglobin {i + 1} (g/dL)', value=None, key=f'fbc_hemoglobin_{i}')
                 rbc = st.number_input(f'Red Blood Cell Count {i + 1} (million cells/µL)', value=None, key=f'fbc_rbc_{i}')
                 hematocrit = st.number_input(f'Hematocrit {i + 1} (%)', value=None, key=f'fbc_hematocrit_{i}')
@@ -284,8 +284,8 @@ if st.session_state['logged_in']:
             submit = st.form_submit_button('Submit Record')
 
         # Initialize the BlobServiceClient
-        # blob_service_client = BlobServiceClient.from_connection_string(st.secrets['conn_str'])
-        blob_service_client = BlobServiceClient.from_connection_string(os.environ.get('conn_str'))
+        blob_service_client = BlobServiceClient.from_connection_string(st.secrets['conn_str'])
+        # blob_service_client = BlobServiceClient.from_connection_string(os.environ.get('conn_str'))
         # Create a single container for all uploaded images
         container_name = 'scanimages'
         container_client = blob_service_client.get_container_client(container_name)
