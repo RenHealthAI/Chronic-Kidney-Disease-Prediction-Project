@@ -388,5 +388,15 @@ if st.session_state['logged_in']:
         filtered_df = patient_df[patient_df['Enumerator'] == selected_enumerator].reset_index(drop=True)
         st.title(f"Records for Enumerator: {selected_enumerator}")
         st.dataframe(filtered_df)
+        st.markdown(
+                """
+                <style>
+                [data-testid="stElementToolbar"] {
+                    display: none;
+                }
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
 
        
